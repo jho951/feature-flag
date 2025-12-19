@@ -1,0 +1,43 @@
+allprojects {
+    group = "io.github.jho951"
+    version = "1.0.0"
+
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+}
+
+subprojects {
+    apply plugin: "java-library"
+    apply plugin: "maven-publish"
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(17)
+        }
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.release = 17
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+                artifactId = "feature-flag-${project.name}"
+            }
+        }
+        repositories {
+            maven {
+                name = "GitHubPackages"
+                url = uri("https://maven.pkg.github.com/jho951/feature-flag")
+                credentials {
+                    username = findProperty("githubUsername")
+                    password = findProperty("githubToken")
+                }
+            }
+        }
+    }
+}

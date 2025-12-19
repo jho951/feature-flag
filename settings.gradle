@@ -1,0 +1,3 @@
+rootProject.name = "feature-flag"
+
+include(":core", ":api", ":store-file", ":config")
