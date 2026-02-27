@@ -27,6 +27,29 @@ subprojects {
             mavenJava(MavenPublication) {
                 from components.java
                 artifactId = "feature-flag-${project.name}"
+                pom {
+                    name = "feature-flag-${project.name}"
+                    description = "Java feature flag modules for targeting, rollout, and variant evaluation."
+                    url = "https://github.com/jho951/feature-flag"
+                    licenses {
+                        license {
+                            name = "MIT License"
+                            url = "https://opensource.org/licenses/MIT"
+                            distribution = "repo"
+                        }
+                    }
+                    developers {
+                        developer {
+                            id = "jho951"
+                            name = "jho951"
+                        }
+                    }
+                    scm {
+                        connection = "scm:git:git://github.com/jho951/feature-flag.git"
+                        developerConnection = "scm:git:ssh://github.com/jho951/feature-flag.git"
+                        url = "https://github.com/jho951/feature-flag"
+                    }
+                }
             }
         }
         repositories {
