@@ -4,13 +4,26 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.*;
 
+/**
+ * 컨텍스트를 기준으로 기능 플래그를 평가하는 핵심 서비스입니다.
+ */
 public final class FeatureFlagService {
 	private final FlagStore store;
 
-	public FeatureFlagService(FlagStore store) {
-		this.store = Objects.requireNonNull(store, "store");
-	}
+	/**
+	 * {@link FlagStore}를 사용해 서비스를 생성합니다.
+	 *
+	 * @param store 플래그 저장소
+	 */
+	public FeatureFlagService(FlagStore store) { this.store = Objects.requireNonNull(store, "store"); }
 
+	/**
+	 * 플래그를 평가하고 상세 의사결정 정보를 반환합니다.
+	 *
+	 * @param key 기능 플래그 키
+	 * @param ctx 요청 컨텍스트
+	 * @return 평가 결과
+	 */
 	public FlagDecision evaluate(String key, FlagContext ctx) {
 		var defOpt = store.find(key);
 		if (defOpt.isEmpty()) {
@@ -45,10 +58,25 @@ public final class FeatureFlagService {
 		return new FlagDecision(true, v, "ROLLOUT_IN", Map.of("key", key, "variant", v, "rollout", def.rolloutPercent()));
 	}
 
+	/**
+	 * 활성/비활성 상태만 필요할 때 사용하는 편의 메서드입니다.
+	 *
+	 * @param key 기능 플래그 키
+	 * @param ctx 요청 컨텍스트
+	 * @return 활성화되면 {@code true}
+	 */
 	public boolean isEnabled(String key, FlagContext ctx) {
 		return evaluate(key, ctx).enabled();
 	}
 
+	/**
+	 * 선택된 variant 또는 fallback을 반환하는 편의 메서드입니다.
+	 *
+	 * @param key 기능 플래그 키
+	 * @param ctx 요청 컨텍스트
+	 * @param fallback 비활성일 때 사용할 fallback variant
+	 * @return 선택된 variant 또는 fallback
+	 */
 	public String variant(String key, FlagContext ctx, String fallback) {
 		FlagDecision d = evaluate(key, ctx);
 		return d.enabled() ? d.variant() : (fallback != null ? fallback : "off");
@@ -87,7 +115,6 @@ public final class FeatureFlagService {
 
 	private String basisId(FlagContext ctx) {
 		if (ctx.userId() != null && !ctx.userId().isBlank()) return ctx.userId();
-		// 익명 사용자는 attr에 "anonId" 같은 걸 넣어서 쓰도록 유도
 		String anon = ctx.attrs().get("anonId");
 		if (anon != null && !anon.isBlank()) return anon;
 		return null;

@@ -8,10 +8,16 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import java.util.*;
 
+/**
+ * 플래그 정의용 내부 JSON 직렬화/역직렬화 유틸리티입니다.
+ */
 final class JsonFlagSerde {
 
 	private final ObjectMapper om;
 
+	/**
+	 * 이 프로젝트 기본 설정으로 Jackson serde를 생성합니다.
+	 */
 	JsonFlagSerde() {
 		this.om = new ObjectMapper()
 			.registerModule(new JavaTimeModule())
@@ -31,6 +37,9 @@ final class JsonFlagSerde {
 	 *   { "key": "checkout.newFlow", ... },
 	 *   { "key": "search.ranking", ... }
 	 * ]
+	 *
+	 * @param json 객체 맵 또는 리스트 형식의 JSON 문자열
+	 * @return 파싱된 플래그 맵(입력이 잘못되었거나 읽을 수 없으면 빈 맵)
 	 */
 	Map<String, FlagDefinition> parseToMap(String json) {
 		if (json == null || json.isBlank()) return new HashMap<>();

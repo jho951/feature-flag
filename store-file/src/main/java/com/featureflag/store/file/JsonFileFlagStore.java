@@ -9,6 +9,9 @@ import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * JSON 파일에서 플래그 정의를 읽는 파일 기반 {@link FlagStore} 구현체입니다.
+ */
 public final class JsonFileFlagStore implements FlagStore {
 
 	private final Path filePath;
@@ -17,6 +20,12 @@ public final class JsonFileFlagStore implements FlagStore {
 
 	private final AtomicReference<Cache> cacheRef = new AtomicReference<>(Cache.empty());
 
+	/**
+	 * JSON 파일 기반 저장소를 생성합니다.
+	 *
+	 * @param filePath JSON 파일 경로
+	 * @param ttl 캐시 TTL(0이면 TTL 캐시 비활성)
+	 */
 	public JsonFileFlagStore(String filePath, Duration ttl) {
 		if (filePath == null || filePath.isBlank()) {
 			throw new IllegalArgumentException("filePath is blank");
@@ -26,6 +35,12 @@ public final class JsonFileFlagStore implements FlagStore {
 		this.serde = new JsonFlagSerde();
 	}
 
+	/**
+	 * 현재 캐시/스냅샷에서 키로 플래그를 조회합니다.
+	 *
+	 * @param key 기능 플래그 키
+	 * @return 플래그가 존재하면 해당 정의
+	 */
 	@Override
 	public Optional<FlagDefinition> find(String key) {
 		if (key == null || key.isBlank()) return Optional.empty();
@@ -33,6 +48,11 @@ public final class JsonFileFlagStore implements FlagStore {
 		return Optional.ofNullable(c.flags.get(key));
 	}
 
+	/**
+	 * 로드된 모든 플래그를 불변 맵으로 반환합니다.
+	 *
+	 * @return 키와 정의의 맵
+	 */
 	@Override
 	public Map<String, FlagDefinition> findAll() {
 		return Collections.unmodifiableMap(loadIfNeeded().flags);

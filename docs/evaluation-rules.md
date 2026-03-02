@@ -1,6 +1,6 @@
 # 평가 규칙
 
-`FeatureFlagService#evaluate`는 아래 순서로 플래그를 평가합니다.
+> [evaluate](../core/src/main/java/com/featureflag/core/FeatureFlagService.java)는 아래 순서로 플래그를 평가합니다.
 
 ## 순서
 
