@@ -52,6 +52,28 @@ The newest release goes first. The release format follows semantic versioning an
 
 - Maven Central coordinates use the `plugin-policy-engine-*` artifact prefix.
 
+## 1.0.4 - 2026-04-01
+
+### Summary
+
+- Retry publish after refreshing Central Portal credentials.
+
+### Breaking Changes
+
+- None.
+
+### New
+
+- No code changes. Release metadata updated for the new publish attempt.
+
+### Fix
+
+- Publish retry with `v1.0.4`.
+
+### Notes
+
+- Use `v1.0.4` for the release tag.
+
 ## 1.0.3 - 2026-04-01
 
 ### Summary

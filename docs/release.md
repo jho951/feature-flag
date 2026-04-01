@@ -4,8 +4,8 @@
 
 이 프로젝트는 `vMAJOR.MINOR.PATCH` 형식을 기본 릴리스 태그로 사용합니다.
 
-- 예시: `v1.0.3`, `v1.1.0`, `v2.0.0`
-- 허용: `v1.0.3-beta.1`, `v1.0.3-rc.1`, `v1.0.3+build.42`
+- 예시: `v1.0.4`, `v1.1.0`, `v2.0.0`
+- 허용: `v1.0.4-beta.1`, `v1.0.4-rc.1`, `v1.0.4+build.42`
 
 ## Release Note Template
 
@@ -34,7 +34,7 @@
 ## GitHub Release Example
 
 ```md
-# v1.0.3
+# v1.0.4
 
 ## Summary
 - Initial public release of Plugin Policy Engine.
