@@ -36,16 +36,16 @@ jobs:
 
       - name: Publish signed artifacts
         env:
-          ORG_GRADLE_PROJECT_ossrhUsername: ${{ secrets.OSSRH_USERNAME }}
-          ORG_GRADLE_PROJECT_ossrhPassword: ${{ secrets.OSSRH_PASSWORD }}
+          ORG_GRADLE_PROJECT_ossrhUsername: ${{ secrets.MAVENCENTRAL_USERNAME || secrets.OSSRH_USERNAME }}
+          ORG_GRADLE_PROJECT_ossrhPassword: ${{ secrets.MAVENCENTRAL_PASSWORD || secrets.OSSRH_PASSWORD }}
           ORG_GRADLE_PROJECT_signingKey: ${{ secrets.SIGNING_KEY }}
           ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.SIGNING_PASSWORD }}
         run: ./gradlew clean publish
 
       - name: Promote deployment in Central Portal
         env:
-          CENTRAL_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          CENTRAL_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+          CENTRAL_USERNAME: ${{ secrets.MAVENCENTRAL_USERNAME || secrets.OSSRH_USERNAME }}
+          CENTRAL_PASSWORD: ${{ secrets.MAVENCENTRAL_PASSWORD || secrets.OSSRH_PASSWORD }}
           CENTRAL_NAMESPACE: io.github.jho951
         run: |
           auth="$(printf '%s:%s' "$CENTRAL_USERNAME" "$CENTRAL_PASSWORD" | base64 -w0)"
