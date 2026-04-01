@@ -1,17 +1,16 @@
-package com.featureflag.store.file;
+package com.pluginpolicyengine.store.file;
 
-import com.featureflag.core.FlagDefinition;
-import com.featureflag.core.FlagStore;
+import com.pluginpolicyengine.core.FlagStore;
+import com.pluginpolicyengine.core.FlagDefinition;
 
 import java.io.IOException;
 import java.nio.file.*;
 import java.time.Duration;
+
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
-/**
- * JSON 파일에서 플래그 정의를 읽는 파일 기반 {@link FlagStore} 구현체입니다.
- */
+/** JSON 파일에서 플래그 정의를 읽는 파일 기반 {@link FlagStore} 구현체입니다. */
 public final class JsonFileFlagStore implements FlagStore {
 
 	private final Path filePath;
@@ -27,9 +26,7 @@ public final class JsonFileFlagStore implements FlagStore {
 	 * @param ttl 캐시 TTL(0이면 TTL 캐시 비활성)
 	 */
 	public JsonFileFlagStore(String filePath, Duration ttl) {
-		if (filePath == null || filePath.isBlank()) {
-			throw new IllegalArgumentException("filePath is blank");
-		}
+		if (filePath == null || filePath.isBlank()) { throw new IllegalArgumentException("filePath is blank");}
 		this.filePath = Paths.get(filePath);
 		this.ttlMs = ttl == null ? 0L : Math.max(0L, ttl.toMillis());
 		this.serde = new JsonFlagSerde();

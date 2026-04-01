@@ -1,6 +1,6 @@
-package com.featureflag.core.store;
+package com.pluginpolicyengine.core.store;
 
-import com.featureflag.core.*;
+import com.pluginpolicyengine.core.*;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

@@ -1,27 +1,86 @@
-# Feature Flag
+# Plugin Policy Engine
 
-[![Java](https://img.shields.io/badge/java-17%2B-blue)]()
-[![Spring Boot](https://img.shields.io/badge/spring--boot-3.x-brightgreen)]()
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+A plugin-friendly Java policy engine for rollout, targeting, and variant evaluation.
 
-애플리케이션 재배포 없이 기능 ON/OFF, 타겟팅, 점진 롤아웃, A/B 테스트를 수행하는 Java 기반 Feature Flag 모듈입니다.
+![CI](https://github.com/jho951/plugin-policy-engine/actions/workflows/build.yml/badge.svg)
+![Release](https://github.com/jho951/plugin-policy-engine/actions/workflows/publish-central.yml/badge.svg)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-## Docs
+## At a Glance
 
-- [문서 인덱스](./docs/README.md)
-- [개요 및 모듈 구조](./docs/overview.md)
-- [빠른 시작](./docs/quick-start.md)
-- [Spring Boot 설정](./docs/spring-config.md)
-- [평가 규칙](./docs/evaluation-rules.md)
-- [JSON 스토어 포맷](./docs/json-format.md)
+- Description: `Plugin Policy Engine is a JVM policy engine for rollout, targeting, and variant evaluation.`
+- About: `JVM policy engine with Spring Boot support.`
+- Topics: `java`, `spring-boot`, `feature-flags`, `policy-engine`, `maven-central`, `open-source`
+- Website: `https://github.com/jho951/plugin-policy-engine`
+- Release: signed tags publish to Maven Central via GitHub Actions
+
+## Maven Coordinates
+
+```gradle
+dependencies {
+    implementation("io.github.jho951:plugin-policy-engine-config:1.0.0")
+}
+```
+
+Published artifacts:
+
+- `io.github.jho951:plugin-policy-engine-core`
+- `io.github.jho951:plugin-policy-engine-api`
+- `io.github.jho951:plugin-policy-engine-store-file`
+- `io.github.jho951:plugin-policy-engine-config`
 
 ## Modules
 
-- `core`: 평가 엔진, 도메인 모델, `FlagStore` 인터페이스
-- `api`: 앱에서 사용하는 최소 API (`FeatureFlagClient`)
-- `store-file`: JSON 파일 기반 `FlagStore` 구현
-- `config`: Spring Boot 자동 설정(starter)
+- `core`: evaluation engine, domain model, `FlagStore`
+- `api`: minimal consumer-facing API (`FeatureFlagClient`)
+- `store-file`: JSON-backed `FlagStore`
+- `config`: Spring Boot auto-configuration starter
+
+## Documentation
+
+- [Docs index](./docs/README.md)
+- [Overview](./docs/overview.md)
+- [Architecture](./docs/architecture.md)
+- [Quick start](./docs/quick-start.md)
+- [Spring Boot config](./docs/spring-config.md)
+- [Evaluation rules](./docs/evaluation-rules.md)
+- [Release notes and tag rules](./docs/release.md)
+- [Changelog](./CHANGELOG.md)
+- [JSON store format](./docs/json-format.md)
+- [Publishing guide](./docs/publishing.md)
+
+## Development
+
+```bash
+./gradlew clean build
+```
+
+To publish locally:
+
+```bash
+./gradlew publishToMavenLocal
+```
+
+For Maven Central release setup, see [docs/publishing.md](./docs/publishing.md).
+
+## Release
+
+1. Rename the GitHub repository to `plugin-policy-engine`.
+2. Register `OSSRH_USERNAME`, `OSSRH_PASSWORD`, `SIGNING_KEY`, and `SIGNING_PASSWORD` in GitHub Secrets.
+3. Run `./gradlew clean build` and `./gradlew publishToMavenLocal`.
+4. Tag the release with `vMAJOR.MINOR.PATCH` and push it.
+5. Confirm the `Publish Plugin Policy Engine To Maven Central` workflow succeeded.
+6. Draft the GitHub Release from [the release template](./.github/RELEASE_TEMPLATE.md) and [changelog](./CHANGELOG.md).
+7. Apply the repository metadata guidance in [docs/repository-metadata.md](./docs/repository-metadata.md).
+
+## Contributing
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md).
+
+## Security
+
+See [SECURITY.md](./SECURITY.md).
 
 ## License
 
-이 프로젝트는 [MIT License](./LICENSE)를 따릅니다.
+Released under the [MIT License](./LICENSE).

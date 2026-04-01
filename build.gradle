@@ -11,26 +11,40 @@ allprojects {
 subprojects {
     apply plugin: "java-library"
     apply plugin: "maven-publish"
+    apply plugin: "signing"
 
     java {
         toolchain {
             languageVersion = JavaLanguageVersion.of(17)
         }
+        withSourcesJar()
+        withJavadocJar()
     }
 
     tasks.withType(JavaCompile).configureEach {
         options.release = 17
+        options.encoding = "UTF-8"
+    }
+
+    tasks.withType(Javadoc).configureEach {
+        options.encoding = "UTF-8"
+        if (JavaVersion.current().isJava9Compatible()) {
+            options.addBooleanOption("html5", true)
+        }
     }
 
     publishing {
         publications {
             mavenJava(MavenPublication) {
                 from components.java
-                artifactId = "feature-flag-${project.name}"
+                artifactId = "plugin-policy-engine-${project.name}"
+
                 pom {
-                    name = "feature-flag-${project.name}"
-                    description = "Java feature flag modules for targeting, rollout, and variant evaluation."
-                    url = "https://github.com/jho951/feature-flag"
+                    name = "plugin-policy-engine-${project.name}"
+                    description = "Plugin-friendly Java policy engine modules for targeting, rollout, and variant evaluation."
+                    url = "https://github.com/jho951/plugin-policy-engine"
+                    inceptionYear = "2026"
+
                     licenses {
                         license {
                             name = "MIT License"
@@ -38,29 +52,59 @@ subprojects {
                             distribution = "repo"
                         }
                     }
+
                     developers {
                         developer {
                             id = "jho951"
                             name = "jho951"
+                            email = "jho951@users.noreply.github.com"
                         }
                     }
+
                     scm {
-                        connection = "scm:git:git://github.com/jho951/feature-flag.git"
-                        developerConnection = "scm:git:ssh://github.com/jho951/feature-flag.git"
-                        url = "https://github.com/jho951/feature-flag"
+                        connection = "scm:git:git://github.com/jho951/plugin-policy-engine.git"
+                        developerConnection = "scm:git:ssh://git@github.com/jho951/plugin-policy-engine.git"
+                        url = "https://github.com/jho951/plugin-policy-engine"
                     }
                 }
             }
         }
+
         repositories {
-            maven {
-                name = "GitHubPackages"
-                url = uri("https://maven.pkg.github.com/jho951/feature-flag")
-                credentials {
-                    username = findProperty("githubUsername")
-                    password = findProperty("githubToken")
+            if (project.hasProperty("ossrhUsername") && project.hasProperty("ossrhPassword")) {
+                maven {
+                    name = "OSSRH"
+                    def releasesUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+                    def snapshotsUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+                    url = uri(version.toString().endsWith("-SNAPSHOT") ? snapshotsUrl : releasesUrl)
+                    credentials {
+                        username = project.findProperty("ossrhUsername")
+                        password = project.findProperty("ossrhPassword")
+                    }
                 }
             }
+
+            if (project.hasProperty("githubUsername") && project.hasProperty("githubToken")) {
+                maven {
+                    name = "GitHubPackages"
+                    url = uri("https://maven.pkg.github.com/jho951/plugin-policy-engine")
+                    credentials {
+                        username = project.findProperty("githubUsername")
+                        password = project.findProperty("githubToken")
+                    }
+                }
+            }
+        }
+    }
+
+    signing {
+        def signingKey = project.findProperty("signingKey")
+        def signingPassword = project.findProperty("signingPassword")
+        required { gradle.taskGraph.allTasks.any { it.name.startsWith("publish") } }
+
+        if (signingKey && signingPassword) {
+            useInMemoryPgpKeys(signingKey, signingPassword)
+            sign(publishing.publications.mavenJava)
         }
     }
 }

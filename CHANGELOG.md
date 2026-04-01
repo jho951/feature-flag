@@ -1,0 +1,53 @@
+# Changelog
+
+All notable changes to this project will be documented in this file.
+
+The newest release goes first. The release format follows semantic versioning and the tag rules in [docs/release.md](./docs/release.md).
+
+## Unreleased
+
+### Summary
+
+- Pending release notes.
+
+### Breaking Changes
+
+- None.
+
+### New
+
+- None.
+
+### Fix
+
+- None.
+
+### Notes
+
+- None.
+
+## 1.0.0 - 2026-04-01
+
+### Summary
+
+- Initial public release of Plugin Policy Engine.
+
+### Breaking Changes
+
+- None.
+
+### New
+
+- Plugin-friendly policy evaluation core.
+- Spring Boot auto-configuration starter.
+- JSON file-backed `FlagStore` implementation.
+- Web gating support through `@FeatureGate`.
+- Deterministic rollout and variant evaluation.
+
+### Fix
+
+- None.
+
+### Notes
+
+- Maven Central coordinates use the `plugin-policy-engine-*` artifact prefix.

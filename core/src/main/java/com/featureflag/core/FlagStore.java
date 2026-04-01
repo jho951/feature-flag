@@ -1,4 +1,4 @@
-package com.featureflag.core;
+package com.pluginpolicyengine.core;
 
 import java.util.*;
 

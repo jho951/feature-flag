@@ -1,7 +1,7 @@
-package com.featureflag.store.file;
+package com.pluginpolicyengine.store.file;
 
-import com.featureflag.core.FlagDefinition;
-import com.featureflag.core.Targeting;
+import com.pluginpolicyengine.core.FlagDefinition;
+import com.pluginpolicyengine.core.Targeting;
 
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -31,13 +31,11 @@ final class JsonFlagSerde {
 	 *   "checkout.newFlow": { ...defWithoutKeyOrWithKey... },
 	 *   "search.ranking":   { ... }
 	 * }
-	 *
 	 * 2) List 형태:
 	 * [
 	 *   { "key": "checkout.newFlow", ... },
 	 *   { "key": "search.ranking", ... }
 	 * ]
-	 *
 	 * @param json 객체 맵 또는 리스트 형식의 JSON 문자열
 	 * @return 파싱된 플래그 맵(입력이 잘못되었거나 읽을 수 없으면 빈 맵)
 	 */

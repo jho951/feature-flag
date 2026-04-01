@@ -1,4 +1,4 @@
-package com.featureflag.config.spring;
+package com.pluginpolicyengine.config.spring;
 
 import java.time.Duration;
 
@@ -7,7 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 /**
  * 기능 플래그 모듈의 Spring Boot 설정 프로퍼티입니다.
  */
-@ConfigurationProperties(prefix = "featureflag")
+@ConfigurationProperties(prefix = "pluginpolicyengine")
 public class FeatureFlagProperties {
 
 	/** v1: MEMORY 또는 FILE */
@@ -18,7 +18,12 @@ public class FeatureFlagProperties {
 	/**
 	 * 지원하는 저장소 백엔드 종류입니다.
 	 */
-	public enum Store { MEMORY, FILE }
+	public enum Store {
+		/** JVM 메모리에 저장된 플래그를 사용하는 저장소입니다. */
+		MEMORY,
+		/** 외부 JSON 파일에서 플래그를 읽는 저장소입니다. */
+		FILE
+	}
 
 	/**
 	 * @return 선택된 플래그 저장소 백엔드

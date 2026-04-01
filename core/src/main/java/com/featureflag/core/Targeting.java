@@ -1,4 +1,4 @@
-package com.featureflag.core;
+package com.pluginpolicyengine.core;
 
 import java.util.*;
 
@@ -67,7 +67,11 @@ public final class Targeting {
 		return false;
 	}
 
-	/** 타게팅 조건이 “있는 경우에만” eligibility 체크 */
+	/**
+	 * eligibility 평가가 필요한 타게팅 조건이 하나라도 있는지 확인합니다.
+	 *
+	 * @return allow 사용자/그룹 또는 속성 조건이 있으면 {@code true}
+	 */
 	public boolean hasEligibilityRules() {
 		return !allowUserIds.isEmpty() || !allowGroups.isEmpty() || !requireAttrsIn.isEmpty();
 	}

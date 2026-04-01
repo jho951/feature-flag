@@ -1,4 +1,4 @@
-name: Backend CI
+name: Plugin Policy Engine CI
 
 on:
   pull_request:
@@ -12,7 +12,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: backend-ci-${{ github.ref }}
+  group: plugin-policy-engine-ci-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -33,12 +33,14 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
-      - name: Build (skip tests for v1)
-        run: ./gradlew clean build -x test
+      - name: Build
+        run: ./gradlew clean build
 
       - name: Upload test reports (always)
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: backend-test-reports
-          path: build/reports/tests/test
+          name: plugin-policy-engine-test-reports
+          path: |
+            build/reports/tests/test
+            */build/reports/tests/test

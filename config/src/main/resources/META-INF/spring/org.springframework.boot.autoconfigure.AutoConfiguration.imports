@@ -1,1 +1,1 @@
-com.featureflag.config.spring.FeatureFlagAutoConfiguration
+com.pluginpolicyengine.config.spring.FeatureFlagAutoConfiguration
