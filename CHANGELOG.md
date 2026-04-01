@@ -52,6 +52,29 @@ The newest release goes first. The release format follows semantic versioning an
 
 - Maven Central coordinates use the `plugin-policy-engine-*` artifact prefix.
 
+## 1.0.2 - 2026-04-01
+
+### Summary
+
+- Rebuild release after migrating publish flow to the Central Portal compatibility API.
+
+### Breaking Changes
+
+- None.
+
+### New
+
+- Central Portal upload step in GitHub Actions.
+- Release Drafter config path fix.
+
+### Fix
+
+- Maven Central publish flow updated from legacy OSSRH endpoint to Central Portal compatibility endpoint.
+
+### Notes
+
+- Use `v1.0.2` for the release tag.
+
 ## 1.0.1 - 2026-04-01
 
 ### Summary

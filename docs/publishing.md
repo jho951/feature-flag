@@ -22,7 +22,7 @@
 
 ## Required Secrets
 
-Maven Central 배포용으로 아래 Gradle properties 또는 환경 변수를 준비합니다.
+Maven Central 배포용으로 아래 Gradle properties 또는 환경 변수를 준비합니다. 이 값들은 Central Portal User Token의 username/password여야 합니다.
 
 - `ossrhUsername`
 - `ossrhPassword`
@@ -41,9 +41,10 @@ GitHub Packages도 병행할 경우:
 3. Maven Central 배포 시크릿을 GitHub Actions에 등록합니다.
 4. `./gradlew clean build`로 전체 빌드를 확인합니다.
 5. `./gradlew publishToMavenLocal`로 로컬 배포를 확인합니다.
-6. `v1.0.1` 같은 태그를 생성한 뒤 push합니다.
+6. `v1.0.2` 같은 태그를 생성한 뒤 push합니다.
 7. `Publish Plugin Policy Engine To Maven Central` 워크플로가 성공하는지 확인합니다.
 8. 릴리스 노트는 [Release notes and tag rules](./release.md)를 기준으로 작성합니다.
+9. Central Portal에 배포가 보이지 않으면 manual upload step이 실행됐는지 확인합니다.
 
 ## Local Verification
 
@@ -67,14 +68,16 @@ GitHub Packages도 병행할 경우:
 예시:
 
 ```bash
-git tag v1.0.1
-git push origin v1.0.1
+git tag v1.0.2
+git push origin v1.0.2
 ```
 
 ## Notes for Maven Central
 
 - `OSSRH_USERNAME`, `OSSRH_PASSWORD`, `SIGNING_KEY`, `SIGNING_PASSWORD`를 GitHub Secrets에 등록해야 합니다.
+- 위 `OSSRH_*` 값은 legacy OSSRH 계정이 아니라 Central Portal User Token 값이어야 합니다.
 - GitHub Packages를 병행할 경우 `githubUsername`, `githubToken`도 별도로 준비합니다.
+- `publish-central.yml`은 배포 후 Central Portal manual upload endpoint를 호출합니다.
 
 ## Notes
 
