@@ -47,10 +47,38 @@ repositories {
 }
 
 dependencies {
-    implementation("io.github.jho951:plugin-policy-engine-core:<version>")
-    implementation("io.github.jho951:plugin-policy-engine-api:<version>")
-    implementation("io.github.jho951:plugin-policy-engine-config:<version>")
+    implementation("io.github.jho951:plugin-policy-engine-core:2.0.0")
+    implementation("io.github.jho951:plugin-policy-engine-api:2.0.0")
+    implementation("io.github.jho951:plugin-policy-engine-config:2.0.0")
 }
+```
+
+```java
+InMemoryFlagStore store = new InMemoryFlagStore();
+store.put(FlagDefinition.builder("checkout.newFlow")
+    .enabled(true)
+    .rolloutPercent(100)
+    .build());
+
+FeatureFlagClient flags = FeatureFlagClientFactory.create(store);
+
+FlagContext ctx = FlagContext.builder()
+    .userId("user-1")
+    .build();
+
+boolean enabled = flags.isEnabled("checkout.newFlow", ctx);
+```
+
+JSON 파일 기반으로 조립할 때:
+
+```java
+FeatureFlagClient flags = FeatureFlagClientFactory.create(
+    FeatureFlagConfig.builder()
+        .store(FeatureFlagConfig.Store.FILE)
+        .filePath("/etc/app/flags.json")
+        .cacheTtl(Duration.ofSeconds(3))
+        .build()
+);
 ```
 
 ## 문서
